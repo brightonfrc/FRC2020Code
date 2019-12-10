@@ -13,6 +13,8 @@ package frc.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+
+ // a class containing constants about what devices are connected to which devices
 public class RobotMap {
   public static final int MOTOR_LEFT_1_ID = 0;
   public static final int MOTOR_LEFT_2_ID = 1;
