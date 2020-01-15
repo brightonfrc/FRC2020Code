@@ -29,9 +29,9 @@ public class DriveSignal{
 
 
 
-    public static DriveSignal inverseKinematicsWithThreshold(Twist2d desiredMovement){
+    public static DriveSignal inverseKinematics(Twist2d desiredMovement, double threshold){
         // if turn less than a threshold, go forward
-        if(Math.abs(desiredMovement.dtheta) < RobotConstantsMap.inverseKinematicsTurnEpsilon){
+        if(Math.abs(desiredMovement.dtheta) < threshold){
             return new DriveSignal(desiredMovement.dx, desiredMovement.dx);
         }
 

@@ -61,27 +61,36 @@ public class DriveTrain extends Subsystem {
   }
 
   // drives with set speeds for each side of motors
-  public void tankDrive(double leftSpeed, double rightSpeed){
+  public void tankDrive(double leftSpeed, double rightSpeed) {
     m_differentialDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
-  public void tankDrive(DriveSignal driveSignal){
+  public void tankDrive(DriveSignal driveSignal) {
     m_differentialDrive.tankDrive(driveSignal.getLeftPercentage(), driveSignal.getRightPercentage());
   }
 
   // drive with a forward speed and rotation speed
-  public void arcadeDrive(double moveSpeed, double rotateSpeed){
+  public void arcadeDrive(double moveSpeed, double rotateSpeed) {
     m_differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
   }
 
   // TODO: do not forget to change the OI input
-  public void curvatureDrive(double throttle, double curvatureInput){
-        DriveSignal signal = DriveSignal.inverseKinematicsWithThreshold(new Twist2d(throttle, 0.0, curvatureInput));
-        double scalingFactor = Math.max(1.0, Math.max(Math.abs(signal.getLeftPercentage()), Math.abs(signal.getRightPercentage())));
-        tankDrive(signal.getLeftPercentage() / scalingFactor, signal.getRightPercentage() / scalingFactor);
+  public void curvatureDrive(double throttle, double curvatureInput, double inverseKinematicsTurnThreshold) {
+    // get the required amount of motor powers to turn
+    DriveSignal signal = DriveSignal.inverseKinematics(new Twist2d(throttle, 0.0, curvatureInput), inverseKinematicsTurnThreshold);
+    // make sure that no motors go above 100% speed
+    double scalingFactor = Math.max(1.0,
+        Math.max(Math.abs(signal.getLeftPercentage()), Math.abs(signal.getRightPercentage())));
+    // apply the scale factor
+    tankDrive(signal.getLeftPercentage() / scalingFactor, signal.getRightPercentage() / scalingFactor);
   }
 
-  public void quickTurn(double rotationSpeed){
+  // if no threshold
+  public void curvatureDrive(double throttle, double curvatureInput) {
+    curvatureDrive(throttle, curvatureInput, 0.0);
+  }
+
+  public void quickTurn(double rotationSpeed) {
     tankDrive(rotationSpeed, -rotationSpeed);
   }
 
