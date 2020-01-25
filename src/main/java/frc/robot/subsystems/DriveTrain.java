@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.TankDrive;
 
 /**
  * Add your docs here.
@@ -26,8 +27,18 @@ public class DriveTrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    System.out.println("Hey");
+    setDefaultCommand(new TankDrive());
   }
 
+  //Notice how the speed of one side of the tank drive is reversed. This is due to the orientation of the motors in the robots being opposite
+  public void setLeftMotors(double speed){
+    motorLeft1.set(ControlMode.PercentOutput, -speed);
+    motorLeft2.set(ControlMode.PercentOutput, -speed);
+  }
+  
+  public void setRightMotors(double speed){
+    motorRight1.set(ControlMode.PercentOutput, -speed);
+    motorRight2.set(ControlMode.PercentOutput, -speed);
+  }
 
 }
