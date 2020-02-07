@@ -84,18 +84,4 @@ public class DriveTrain extends SubsystemBase {
   public void quickTurn(double rotationSpeed) {
     tankDrive(rotationSpeed, -rotationSpeed);
   }
-
-  /*
-   * // WAY 2 (https://www.youtube.com/watch?v=A43CDiXtEdY)
-   * 
-   * private Talon m_leftMotors[] = {m_motorLeft1, m_motorLeft2, m_motorLeft3};
-   * private Talon m_rightMotors[] = {m_motorRight1, m_motorRight2,
-   * m_motorRight3};
-   * 
-   * public void setLeftMotorsSpeed(double speed){ for (Talon motor :
-   * m_leftMotors) { motor.set(speed); } }
-   * 
-   * public void setRightMotorsSpeed(double speed){ for (Talon motor :
-   * m_rightMotors) { motor.set(speed); } }
-   */
 }

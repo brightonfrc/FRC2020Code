@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriverControls;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,9 +27,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static OI m_oi;
-  public static DriveTrain m_driveTrain;
-  public static Shooter m_shooter;
+  public static OI oi;
+  public static DriveTrain driveTrain;
+  public static Shooter shooter;
+  public static DriverControls driverControls;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -39,9 +41,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    m_driveTrain = new DriveTrain();
-    m_shooter = new Shooter();
+    oi = new OI();
+    driveTrain = new DriveTrain();
+    shooter = new Shooter();
+
+    driverControls = new DriverControls();
 
 
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -73,7 +77,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     // update the joystick values
     // all the code goes after this function
-    m_oi.update();
+    oi.update();
 
     CommandScheduler.getInstance().run();
   }
@@ -113,7 +117,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     // update the joystick values
     // all the code goes after this function
-    m_oi.update();
+    oi.update();
 
     CommandScheduler.getInstance().run();
   }
@@ -136,7 +140,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // update the joystick values
     // all the code goes after this function
-    m_oi.update();
+    oi.update();
 
     CommandScheduler.getInstance().run();
   }
@@ -148,6 +152,6 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     // update the joystick values
     // all the code goes after this function
-    m_oi.update();
+    oi.update();
   }
 }

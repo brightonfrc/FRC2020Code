@@ -52,12 +52,14 @@ public class OI {
 
   public void update(){
     // left joystick - x and y
-    // right joystick - throttle(x), twist(y) = z
+    // right joystick - throttle(y), twist(x) = z
 
     xAxis = stick.getX();
     yAxis = stick.getY();
     zAxis = stick.getZ();
     twistAxis = stick.getTwist();
     throttleAxis = stick.getThrottle();
+
+    System.out.println(yAxis);
   }
 }
