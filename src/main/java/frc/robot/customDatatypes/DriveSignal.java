@@ -1,6 +1,6 @@
 package frc.robot.customDatatypes;
 
-import frc.robot.RobotConstantsMap;
+import frc.robot.Constants;
 
 // analogue for team 254
 // stores percentage speed for drivetrain
@@ -41,7 +41,7 @@ public class DriveSignal{
     public static DriveSignal inverseKinematics(Twist2d desiredMovement){
         // the difference in the speed of the wheels
         // scrub factor might be how much the track slips sideways against the force exerienced during the turn
-        double delta_v = RobotConstantsMap.driveWheelTrackWidth * desiredMovement.dtheta / (2 * RobotConstantsMap.trackScrubFactor);
+        double delta_v = Constants.DRIVE_WHEEL_TRACK_WIDTH * desiredMovement.dtheta / (2 * Constants.TRACK_SCRUB_FACTOR);
         return new DriveSignal(desiredMovement.dx - delta_v, desiredMovement.dx + delta_v);
     }
 }

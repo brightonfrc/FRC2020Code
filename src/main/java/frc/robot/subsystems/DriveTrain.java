@@ -9,23 +9,20 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.customDatatypes.DriveSignal;
 import frc.robot.customDatatypes.Twist2d;
 
 /**
  * Add your docs here.
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends SubsystemBase {
   private Talon m_motorLeft1;
   private Talon m_motorLeft2;
-  private Talon m_motorLeft3;
   private Talon m_motorRight1;
   private Talon m_motorRight2;
-  private Talon m_motorRight3;
 
   // create groups for motors
   private SpeedControllerGroup m_leftMotors;
@@ -33,17 +30,16 @@ public class DriveTrain extends Subsystem {
 
   private DifferentialDrive m_differentialDrive;
 
+
   public DriveTrain() {
-    m_motorLeft1 = new Talon(RobotMap.MOTOR_LEFT_1_ID);
-    m_motorLeft2 = new Talon(RobotMap.MOTOR_LEFT_2_ID);
-    m_motorLeft3 = new Talon(RobotMap.MOTOR_LEFT_3_ID);
-    m_motorRight1 = new Talon(RobotMap.MOTOR_RIGHT_1_ID);
-    m_motorRight2 = new Talon(RobotMap.MOTOR_RIGHT_2_ID);
-    m_motorRight3 = new Talon(RobotMap.MOTOR_RIGHT_3_ID);
+    m_motorLeft1 = new Talon(Constants.MOTOR_LEFT_1_ID);
+    m_motorLeft2 = new Talon(Constants.MOTOR_LEFT_2_ID);
+    m_motorRight1 = new Talon(Constants.MOTOR_RIGHT_1_ID);
+    m_motorRight2 = new Talon(Constants.MOTOR_RIGHT_2_ID);
 
     // WAY 1 (on one note)
-    m_leftMotors = new SpeedControllerGroup(m_motorLeft1, new SpeedControllerGroup(m_motorLeft2, m_motorLeft3));
-    m_rightMotors = new SpeedControllerGroup(m_motorRight1, new SpeedControllerGroup(m_motorRight2, m_motorRight3));
+    m_leftMotors = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
+    m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
 
     m_differentialDrive = new DifferentialDrive(m_leftMotors, m_rightMotors);
   }
@@ -53,12 +49,6 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  @Override
-  public void initDefaultCommand() {
-    // set speed to 0
-    tankDrive(DriveSignal.NEUTRAL);
-    System.out.println("Hey");
-  }
 
   // drives with set speeds for each side of motors
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -77,7 +67,8 @@ public class DriveTrain extends Subsystem {
   // TODO: do not forget to change the OI input
   public void curvatureDrive(double throttle, double curvatureInput, double inverseKinematicsTurnThreshold) {
     // get the required amount of motor powers to turn
-    DriveSignal signal = DriveSignal.inverseKinematics(new Twist2d(throttle, 0.0, curvatureInput), inverseKinematicsTurnThreshold);
+    DriveSignal signal = DriveSignal.inverseKinematics(new Twist2d(throttle, 0.0, curvatureInput),
+        inverseKinematicsTurnThreshold);
     // make sure that no motors go above 100% speed
     double scalingFactor = Math.max(1.0,
         Math.max(Math.abs(signal.getLeftPercentage()), Math.abs(signal.getRightPercentage())));
