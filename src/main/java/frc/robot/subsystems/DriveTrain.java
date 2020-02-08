@@ -49,7 +49,6 @@ public class DriveTrain extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-<<<<<<< HEAD
 
   // drives with set speeds for each side of motors
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -58,22 +57,6 @@ public class DriveTrain extends SubsystemBase {
 
   public void tankDrive(DriveSignal driveSignal) {
     m_differentialDrive.tankDrive(driveSignal.getLeftPercentage(), driveSignal.getRightPercentage());
-=======
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new TankDrive());
-  }
-
-  //Notice how the speed of one side of the tank drive is reversed. This is due to the orientation of the motors in the robots being opposite
-  public void setLeftMotors(double speed){
-    motorLeft1.set(ControlMode.PercentOutput, -speed);
-    motorLeft2.set(ControlMode.PercentOutput, -speed);
-  }
-  
-  public void setRightMotors(double speed){
-    motorRight1.set(ControlMode.PercentOutput, -speed);
-    motorRight2.set(ControlMode.PercentOutput, -speed);
->>>>>>> master
   }
 
   // drive with a forward speed and rotation speed
